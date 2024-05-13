@@ -15,7 +15,7 @@ spec:
       containers:
           - name: postgres
             image: 'postgres:latest'
-            imagePullPolicy: IfNotPresent
+            imagePullPolicy: Always
             ports:
               - containerPort: 5432
             env:
@@ -26,11 +26,11 @@ spec:
                     name: postgres-configmap
                     key: POSTGRES_DB
 
-              - name: POSTGRES_USERNAME
+              - name: POSTGRES_USER
                 valueFrom:
                   secretKeyRef:
                     name: postgres-credentials
-                    key: POSTGRES_USERNAME
+                    key: POSTGRES_USER
 
               - name: POSTGRES_PASSWORD
                 valueFrom:
