@@ -4,26 +4,6 @@
 pipeline {
     agent any
     stages {
-
-        stage('Build Image') {
-            steps {
-                script {
-                    discovery = docker.build("pasilva2023/db:${env.BUILD_ID}", "-f Dockerfile .")
-                }
-            }
-        }
-
-        stage('Push Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credential') {
-                        discovery.push("${env.BUILD_ID}")
-                        discovery.push("latest")
-                    }
-                }
-            }
-        }
-
         stage('Deploy on k8s') {
             steps {
                 withCredentials([ string(credentialsId: 'minikube-credentials', variable: 'api_token') ]) {
